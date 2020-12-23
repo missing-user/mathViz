@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numba import jit
 
-res = 2048
+res = 1024
 maxIter = 50
 
 
