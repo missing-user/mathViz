@@ -39,8 +39,7 @@ def distanceFloor(angle):
 def formatDist(angle):
     if(distanceFloor(angle) > 0):
         return "{:5.1f}".format(distanceFloor(angle))
-    else:
-        return " --- "
+    return " --- "
 
 
 def formatDeg(angle):
