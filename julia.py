@@ -12,13 +12,13 @@ c = complex(0.285, 0.01)
 
 
 @jit
-def julia(c, z0, max_iter):
+def julia(ci, z0, max_iter):
     z = z0
     for n in range(max_iter):
         if abs(z) > 2:
             return (n, z.real, z.imag)
         else:
-            z = z * z + c
+            z = z * z + ci
     return (n, z.real, z.imag)
 
 
