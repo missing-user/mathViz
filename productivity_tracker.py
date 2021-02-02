@@ -13,7 +13,7 @@ plt.xkcd()
 fig, ax = plt.subplots()
 
 
-def draw_chart(frame):
+def draw_chart():
     process_dict = get_process_times()
     tasks = ['WRITING PRODUCTIVITY\nTRACKER']
     times = [600]

@@ -12,7 +12,7 @@ coneHeight = 0.3
 desiredDistance = 100
 maxDistance = 0
 
-#the first cone we want to be able to detect
+# the first cone we want to be able to detect
 minDist = 2.5
 maxAngle = 0
 tilt = 0
@@ -39,8 +39,7 @@ def distanceFloor(angle):
 def formatDist(angle):
     if(distanceFloor(angle) > 0):
         return "{:5.1f}".format(distanceFloor(angle))
-    else:
-        return " --- "
+    return " --- "
 
 
 def formatDeg(angle):
@@ -97,16 +96,17 @@ for alpha in angles:
         line.set_color('blue')
         if(distanceFloor(alpha) > 0):
             cone, = plt.plot([distanceFloor(alpha), distanceFloor(alpha)], [
-                         0, coneHeight], color='orange')
+                0, coneHeight], color='orange')
             cone.set_linewidth(5)
             cones.append(cone)
     else:
         line.set_color('lightblue')
     lines.append(line)
 
-#indicator lines for the slider values
+# indicator lines for the slider values
 tilt_line, = plt.plot([0, 120], [height, 0], color='red')
-equidistant_line, = plt.plot([0, 1000*np.cos(tilt)], [height, height + 1000*np.sin(tilt)], color='red')
+equidistant_line, = plt.plot(
+    [0, 1000*np.cos(tilt)], [height, height + 1000*np.sin(tilt)], color='red')
 
 for d in np.arange(minDist+1, 80, 0.5):
     cone, = plt.plot([d, d], [0, coneHeight], color='orange')
@@ -127,14 +127,14 @@ axtilt = plt.axes([0.25, 0.11, 0.65, 0.03])
 axcut = plt.axes([0.25, 0.16, 0.65, 0.03])
 
 tilt_slid = Slider(axtilt, 'tilt', -10, 5, valinit=0)
-cutoff_slid = Slider(axcut, 'switch to equidistant', 5, 250, valinit=120, valstep=5)
+cutoff_slid = Slider(axcut, 'switch to equidistant',
+                     5, 250, valinit=120, valstep=5)
 safe_slid = Slider(axspt, 'safe points', 1, 10, valinit=3, valstep=1)
 cone_slid = Slider(axcone, 'main laser density', 0.05, 0.3, valinit=0.25)
 
 # place a text box in upper left in axes coords
 textb = plt.text(0.05, 0.95, 'initial text',
                  transform=ax.transAxes, verticalalignment='top')
-
 
 
 def lHitsC(l, c):
@@ -151,7 +151,7 @@ def lHitsC(l, c):
     return False
 
 
-def update(val):
+def update(_):
     global tilt
     global coneHeight
     global desiredDistance
@@ -203,7 +203,8 @@ def update(val):
             c.set_color('green')
 
     tstr = ''.join([
-        'maxAngle: ', formatDeg(maxAngle  if not baseline else max(angles) + tilt), "°",
+        'maxAngle: ', formatDeg(
+            maxAngle if not baseline else max(angles) + tilt), "°",
         '\nideal max distance: ', "{:5.1f}".format(maxDistance), " m",
         '\nclosest undetectable cone: ', "{:5.1f}".format(twopcdist), " m",
         '\nideal points per cone: ', str(safePoints)])
@@ -212,7 +213,7 @@ def update(val):
     fig.canvas.draw_idle()
 
 
-def out(event):
+def out(_):
     print('\n\n\nData Print')
     calcAngles(True)
     print()
@@ -226,10 +227,12 @@ def out(event):
     print(angles)
     print()
     for i in range(64):
-        print("{:3d}".format(i), '    angle: ', formatDeg((np.pi/2)-angles[i]), '  distance:', formatDist(angles[i]), '     delta a:', formatDeg(angles[i] - angles[max(0, i - 1)]), '       diff to ouster: ', formatDeg(angles[i] - ousterAngle(i)))
+        print("{:3d}".format(i), '    angle: ', formatDeg((np.pi/2)-angles[i]), '  distance:', formatDist(angles[i]), '     delta a:', formatDeg(
+            angles[i] - angles[max(0, i - 1)]), '       diff to ouster: ', formatDeg(angles[i] - ousterAngle(i)))
 
     plt.figure(2)
     plt.plot(range(64), angles)
+
 
 def togglePerformance(event):
     if event == "baseline":
@@ -247,15 +250,19 @@ def togglePerformance(event):
     update(0)
     fig.canvas.draw_idle()
 
+
 def toggleBaseline(event):
     global baseline
     global angles
     baseline = not baseline
     angles = []
-    angles.extend(np.arange(np.deg2rad(90-22.5), np.deg2rad(90+23), np.deg2rad(0.703125)))
+    angles.extend(np.arange(np.deg2rad(90-22.5),
+                            np.deg2rad(90+23), np.deg2rad(0.703125)))
+
 
 rax = plt.axes([0.91, 0.8, 0.075, 0.15])
-check = CheckButtons(rax, ["simplified", "baseline"], [not highPerformance, baseline])
+check = CheckButtons(rax, ["simplified", "baseline"], [
+                     not highPerformance, baseline])
 
 
 check.on_clicked(togglePerformance)

@@ -17,8 +17,7 @@ def julia(ci, z0, max_iter):
     for n in range(max_iter):
         if abs(z) > 2:
             return (n, z.real, z.imag)
-        else:
-            z = z * z + ci
+        z = z * z + ci
     return (n, z.real, z.imag)
 
 

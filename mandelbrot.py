@@ -12,8 +12,7 @@ def mandelbrot(c, max_iter):
     for n in range(max_iter):
         if abs(z) > 2:
             return (n, z.real, z.imag)
-        else:
-            z = z * z + c
+        z = z * z + c
     return (n, z.real, z.imag)
 
 
@@ -29,14 +28,14 @@ def mandelbrot_set(xres, yres, re_start, re_end, im_start, im_end):
     return values
 
 
-def get_iterations(input):
+def get_iterations(_):
     output = []
     for collumn in results:
         output.append([i[0] for i in collumn])
     return output
 
 
-def get_numbers(input):
+def get_numbers(_):
     output = []
     for collumn in results:
         output.append([complex(i[1], i[2]) for i in collumn])
