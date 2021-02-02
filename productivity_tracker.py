@@ -1,11 +1,9 @@
 from win32gui import GetForegroundWindow
 import psutil
 import matplotlib.animation as animation
-import time
 import win32process
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
 
 process_time = {}
 timestamp = {}
@@ -13,6 +11,7 @@ timestamp = {}
 
 plt.xkcd()
 fig, ax = plt.subplots()
+
 
 def draw_chart(frame):
     process_dict = get_process_times()
@@ -25,7 +24,6 @@ def draw_chart(frame):
 
     y_pos = np.arange(len(times))
 
-
     ax.clear()
     plt.xkcd()
     ax.bar(y_pos, times, align='center')
@@ -36,12 +34,13 @@ def draw_chart(frame):
 
 
 anim_interval = 1
-process_time={}
+process_time = {}
 
 
 def get_process_times():
     try:
-        current_app = psutil.Process(win32process.GetWindowThreadProcessId(GetForegroundWindow())[1]).name().replace(".exe", "")
+        current_app = psutil.Process(win32process.GetWindowThreadProcessId(
+            GetForegroundWindow())[1]).name().replace(".exe", "")
     except:
         print('error getting process')
         return process_time
